@@ -120,14 +120,14 @@ export PATH=~/.config/composer/vendor/bin:$PATH
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/bart/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/bart/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/bart/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/bart/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/bart/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/bart/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/bart/anaconda3/bin:$PATH"
+        export PATH="/home/bart/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup

@@ -1,5 +1,12 @@
+## Initialize completion
+
 autoload -Uz compinit
 compinit
+
+## Paths
+
+PATH=$PATH:/usr/local/sbin
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -14,12 +21,12 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-### Zinit Plugins
+## Zinit Plugins
 
+zinit light zdharma-continuum/fast-syntax-highlighting
 zinit load zdharma-continuum/history-search-multi-word
 zinit light zsh-users/zsh-history-substring-search
-zinit light zdharma-continuum/fast-syntax-highlighting
-zinit ice depth=1;zinit light sindresorhus/pure
+zinit light sindresorhus/pure
 
 ### Autosuggestions
 
@@ -30,9 +37,9 @@ zinit light zsh-users/zsh-autosuggestions
 ### Enhancd
 
 zinit ice wait"0b" lucid
-zinit light b4b4r07/enhancd
+# zinit light b4b4r07/enhancd
 
-### Tab Completion
+## Tab Completion
 
 zinit ice wait"0b" lucid blockf
 zinit light zsh-users/zsh-completions
@@ -54,42 +61,36 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zinit ice from"gh-r" as"program" bpick"*appimage*" ver"nightly" mv"nvim* -> nvim" pick"nvim"
 zinit light neovim/neovim
 
-# PRETTYPING
+### Prettytyping
+
 zinit ice lucid wait'' as"program" pick"prettyping" atload'alias ping=prettyping'
 zinit load "denilsonsa/prettyping"
 
-### Aliases
-
-PATH=$PATH:/usr/local/sbin
-
 # Personal Aliases
 
-alias pub="cat ~/.ssh/id_rsa.pub | pbcopy"
+alias pub='cat ~/.ssh/id_rsa.pub | pbcopy'
 alias l='ls -CF'
 alias ll='ls -alhF'
 alias la='ls -A'
-alias ls="ls -G"
-alias grep="grep --colour=auto"
-alias gcp="git add . && git commit && git push"
-alias digs="dig +short"
-alias k="kubectl"
-alias kc="kubectl config use-context"
+alias ls='ls -G'
+alias grep='grep --colour=auto'
+alias gcp='git add . && git commit && git push'
+alias digs='dig +short'
+alias k='kubectl'
+alias kc='kubectl config use-context'
 alias cp='cp -iv'                           # Preferred 'cp' implementation
 alias mv='mv -iv'                           # Preferred 'mv' implementation
 alias openssl3='/usr/local/opt/openssl@3'
+compdef __start_kubectl k
 
 # Terminal History
 
 HISTSIZE=15000
 
-# Global Node Modules from Yarn
+# Kubernetes Autocompletions
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+source <(kubectl completion zsh)
 
 # Python virtual environments
 
 eval "$(pyenv init -)"
-
-# Autocompletions
-
-source <(kubectl completion zsh)

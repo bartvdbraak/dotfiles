@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -51,25 +51,27 @@
 
   services.libinput.enable = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   users.users.bart = {
     isNormalUser = true;
     description = "Bart van der Braak";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      kdePackages.kate
       vscodium-fhs
-      git
       thunderbird
       fastfetch
     ];
   };
 
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  environment.systemPackages = with pkgs; with inputs; [
+    inputs.zen-browser.packages."${system}".default
+    firefox
+    git
     vim
     wget
+    curl
   ];
   environment.variables.EDITOR = "vim";
 

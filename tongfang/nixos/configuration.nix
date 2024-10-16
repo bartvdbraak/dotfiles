@@ -59,6 +59,8 @@
       vscodium-fhs
       thunderbird
       fastfetch
+      wezterm
+      nvim
     ];
   };
 

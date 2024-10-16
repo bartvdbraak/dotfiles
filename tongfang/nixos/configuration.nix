@@ -2,7 +2,7 @@
 
 {
   imports = [
-    /etc/nixos/hardware-configuration.nix
+    ./hardware-configuration.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -29,6 +29,7 @@
 
   services.xserver.enable = false;
   services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
 
   services.xserver.xkb = {
@@ -48,7 +49,9 @@
     pulse.enable = true;
   };
 
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   users.users.bart = {
     isNormalUser = true;
@@ -56,20 +59,19 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
-      codium
+      vscodium-fhs
       git
       thunderbird
       fastfetch
     ];
   };
 
-
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    inputs.zen-browser.packages."${system}".specific
-    nvim
+    vim
     wget
   ];
+  environment.variables.EDITOR = "vim";
 
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.05";
 }

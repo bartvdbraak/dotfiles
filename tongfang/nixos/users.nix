@@ -16,6 +16,7 @@
       opentofu
       python3
       gnumake
+      spotify
     ];
   };
 

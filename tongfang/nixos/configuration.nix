@@ -3,18 +3,22 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./users.nix             # Import user-specific config
+    ./packages.nix          # Import package-specific config
+    ./services.nix          # Import services config
   ];
 
+  # Bootloader and EFI settings
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Hostname and networking
   networking.hostName = "tongfang";
   networking.networkmanager.enable = true;
 
+  # Time and locale settings
   time.timeZone = "Europe/Amsterdam";
-
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "nl_NL.UTF-8";
     LC_IDENTIFICATION = "nl_NL.UTF-8";
@@ -27,77 +31,18 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  services.xserver.enable = false;
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.desktopManager.plasma6.enable = true;
-
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  services.printing.enable = false;
-  hardware.bluetooth.enable = true;
-
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  services.libinput.enable = true;
-
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-27.3.11"
-  ];
-  
-  users.users.bart = {
-    isNormalUser = true;
-    description = "Bart van der Braak";
-    extraGroups = [ "networkmanager" "wheel" ];
+  # Fonts configuration
+  fonts = {
+    enableDefaultPackages = true;
     packages = with pkgs; [
-      vscodium
-      thunderbird
-      fastfetch
-      wezterm
-      neovim
-      logseq
-      element-desktop
-      opentofu
-      python3
-      gnumake
+      jetbrains-mono
     ];
   };
 
-  services.tailscale.enable = true;
-  
+  # Enable Nix Flakes and experimental features
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  environment.systemPackages = with pkgs; with inputs; [
-    inputs.zen-browser.packages."${system}".default
-    firefox
-    git
-    vim
-    wget
-    curl
-    fzf
-    jq
-    ripgrep
-  ];
-  environment.variables = {
-    EDITOR = "vim";
-    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
-    NIXOS_OZONE_WL = "1";
-  };
-
-  fonts.packages = with pkgs; [
-    jetbrains-mono
-  ];
-
+  # System state version
   system.stateVersion = "24.05";
 }

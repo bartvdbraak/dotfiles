@@ -66,6 +66,7 @@
       wezterm
       neovim
       logseq
+      element-desktop
     ];
   };
 

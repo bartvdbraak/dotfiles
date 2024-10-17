@@ -67,6 +67,9 @@
       neovim
       logseq
       element-desktop
+      opentofu
+      python3
+      gnumake
     ];
   };
 

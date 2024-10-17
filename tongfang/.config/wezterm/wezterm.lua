@@ -12,7 +12,7 @@ return {
   color_scheme = "OneHalfDark",
 
   -- Set window transparency
-  window_background_opacity = 0.9,
+  window_background_opacity = 0.95,
 
   -- Hide tab bar if there's only one tab
   hide_tab_bar_if_only_one_tab = true,

@@ -87,6 +87,7 @@
     curl
     fzf
     jq
+    ripgrep
   ];
   environment.variables = {
     EDITOR = "vim";

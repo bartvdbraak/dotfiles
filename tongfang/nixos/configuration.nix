@@ -60,7 +60,7 @@
     description = "Bart van der Braak";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      vscodium-fhs
+      vscodium
       thunderbird
       fastfetch
       wezterm
@@ -85,7 +85,11 @@
     curl
     fzf
   ];
-  environment.variables.EDITOR = "vim";
+  environment.variables = {
+    EDITOR = "vim";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+    NIXOS_OZONE_WL = "1";
+  };
 
   fonts.packages = with pkgs; [
     jetbrains-mono

@@ -51,6 +51,10 @@
 
   services.libinput.enable = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-27.3.11"
+  ];
+  
   users.users.bart = {
     isNormalUser = true;
     description = "Bart van der Braak";
@@ -61,6 +65,7 @@
       fastfetch
       wezterm
       neovim
+      logseq
     ];
   };
 

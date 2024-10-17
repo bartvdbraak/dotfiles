@@ -60,7 +60,7 @@
       thunderbird
       fastfetch
       wezterm
-      nvim
+      neovim
     ];
   };
 
@@ -76,6 +76,10 @@
     curl
   ];
   environment.variables.EDITOR = "vim";
+
+  fonts.packages = with pkgs; [
+    jetbrains-mono
+  ];
 
   system.stateVersion = "24.05";
 }

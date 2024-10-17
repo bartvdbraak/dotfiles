@@ -79,6 +79,7 @@
     vim
     wget
     curl
+    fzf
   ];
   environment.variables.EDITOR = "vim";
 

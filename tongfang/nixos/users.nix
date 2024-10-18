@@ -13,10 +13,16 @@
       neovim
       logseq
       element-desktop
+      go-task
       opentofu
       python3
       gnumake
       spotify
+      _1password-gui
+      nodejs_22
+      corepack_22
+      azure-cli
+      sops
     ];
   };
 

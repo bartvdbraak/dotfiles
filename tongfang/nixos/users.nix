@@ -23,6 +23,7 @@
       corepack_22
       azure-cli
       sops
+      blender
     ];
   };
 

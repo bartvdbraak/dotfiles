@@ -1,11 +1,13 @@
 { pkgs, ... }:
 
 {
-  # X11 is disabled, but we're using SDDM with Wayland
+  # Desktop, display and greeter configuration
   services.xserver.enable = false;
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
 
   # Audio system with PipeWire
   # Enable PipeWire and ALSA support

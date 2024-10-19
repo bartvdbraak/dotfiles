@@ -24,9 +24,10 @@
   # Enable security-related service for realtime audio tasks
   security.rtkit.enable = true;
 
-  # Steam, Tailscale, and other services
+  # Steam, Tailscale, and other programs/services
   programs.steam.enable = true;
   services.tailscale.enable = true;
+  programs.partition-manager.enable = true;
 
   # Environment variables
   environment.variables = {

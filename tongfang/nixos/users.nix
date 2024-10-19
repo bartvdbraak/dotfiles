@@ -31,4 +31,13 @@
     # Workaround for electron dependency in Logseq
     "electron-27.3.11"
   ];
+
+  # SSH agent configurations
+  programs.ssh.startAgent = true;
+  programs.ssh.extraConfig = ''
+    Host *
+      AddKeysToAgent yes
+      ServerAliveInterval 60
+      ServerAliveCountMax 3
+  '';
 }

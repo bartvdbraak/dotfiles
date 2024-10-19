@@ -39,8 +39,8 @@ return {
     -- CTRL+W to close the current tab
     {key="w", mods="CTRL", action=wezterm.action{CloseCurrentTab={confirm=true}}},
 
-    -- CTRL+D to split pane horizontally
-    {key="d", mods="CTRL", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
+    -- CTRL+ALT+D to split pane horizontally
+    {key="d", mods="CTRL|ALT", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
 
     -- CTRL+SHIFT+D to split pane vertically
     {key="d", mods="CTRL|SHIFT", action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},

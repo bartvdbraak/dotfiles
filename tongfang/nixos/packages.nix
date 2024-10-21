@@ -14,6 +14,7 @@ in
     fzf
     jq
     ripgrep
+    networkmanager-openvpn
     (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
     [General]
     background=${customWallpaper}

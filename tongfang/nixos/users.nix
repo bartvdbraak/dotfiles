@@ -32,7 +32,7 @@
     "electron-27.3.11"
   ];
 
-  # SSH agent configurations
+  # SSH agent configuration
   programs.ssh.startAgent = true;
   programs.ssh.extraConfig = ''
     Host *
@@ -40,4 +40,8 @@
       ServerAliveInterval 60
       ServerAliveCountMax 3
   '';
+
+  # GPG agent configuration
+  programs.gnupg.agent.enable = true;
+  programs.gnupg.dirmngr.enable = true;
 }

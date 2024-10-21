@@ -22,7 +22,7 @@ return {
     left = 5,
     right = 5,
     top = 5,
-    bottom = 5,
+    bottom = 25,
   },
 
   -- Use a steady block cursor

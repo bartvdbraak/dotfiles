@@ -1,6 +1,7 @@
 [user]
 	name = Bart van der Braak
 	email = bart@vanderbraak.nl
+	# signingkey = 26ED0D75D89D9B61
 [alias]
 	p = push
 	st = status
@@ -15,6 +16,8 @@
 	excludesfile = $HOME/.gitignore_global
 [init]
 	defaultBranch = main
+[commit]
+	# gpgsign = true
 [push]
 	autoSetupRemote = true
 [filter "lfs"]
@@ -22,3 +25,9 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[includeIf "gitdir:~/Repos/github.com/blender/"]
+    path = ~/.config/git/blender.gitconfig
+[includeIf "gitdir:~/Repos/gitlab.com/blender/"]
+    path = ~/.config/git/blender.gitconfig
+[includeIf "gitdir:~/Repos/projects.blender.org/"]
+    path = ~/.config/git/blender.gitconfig

@@ -20,5 +20,6 @@ in
     background=${customWallpaper}
     '')
     dig
+    caligula
   ];
 }

@@ -19,5 +19,6 @@ in
     [General]
     background=${customWallpaper}
     '')
+    dig
   ];
 }

@@ -1,15 +1,17 @@
-{ lib, stdenv, fetchurl, kernel, bc, nukeReferences }:
+{ lib, stdenv, fetchFromGitHub, kernel, bc, nukeReferences }:
 
 stdenv.mkDerivation rec {
-  pname = "yt6801-driver";
-  version = "${kernel.version}-unstable-2024-10-25";
+  pname = "yt6801";
+  version = "1.0.29";
 
-  src = fetchurl {
-    url = "https://www.motor-comm.com/Public/Uploads/uploadfile/files/20240812/yt6801-linux-driver-1.0.29.zip";
-    sha256 = "1r8r463y140vrkilkciba16864cfcm35kdqpby50bs8dwmw84gm3";
+  src = fetchFromGitHub {
+    owner = "bartvdbraak";
+    repo = pname;
+    rev = "ea9c2d01c0f2a4171a774527dce4daca43e11956";
+    hash = "sha256-oz6CeOUN6QWKXxe3WUZljhGDTFArsknjzBuQ4IchGeU=";
   };
 
-  nativeBuildInputs = [ stdenv.lib.makeWrapper bc nukeReferences ] ++ kernel.moduleBuildDependencies;
+  nativeBuildInputs = [ bc nukeReferences ] ++ kernel.moduleBuildDependencies;
   hardeningDisable = [ "pic" "format" ];
 
   postPatch = ''

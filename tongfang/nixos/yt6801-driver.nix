@@ -1,44 +1,40 @@
-{ lib, stdenv, fetchFromGitHub, kernel, bc, nukeReferences }:
+{ lib, stdenv, fetchzip, nukeReferences, bc, kernel }:
 
 stdenv.mkDerivation rec {
   pname = "yt6801";
   version = "1.0.29";
+  name = "${pname}-${version}-${kernel.version}";
 
-  src = fetchFromGitHub {
-    owner = "bartvdbraak";
-    repo = pname;
-    rev = "ea9c2d01c0f2a4171a774527dce4daca43e11956";
-    hash = "sha256-oz6CeOUN6QWKXxe3WUZljhGDTFArsknjzBuQ4IchGeU=";
+  src = fetchzip {
+    url = "https://www.motor-comm.com/Public/Uploads/uploadfile/files/20240812/yt6801-linux-driver-1.0.29.zip";
+    sha256 = "sha256-oz6CeOUN6QWKXxe3WUZljhGDTFArsknjzBuQ4IchGeU=";
+    stripRoot = false;
   };
 
-  nativeBuildInputs = [ bc nukeReferences ] ++ kernel.moduleBuildDependencies;
-  buildInputs = [ kernel.dev ];
   hardeningDisable = [ "pic" "format" ];
+  KERNELDIR = "${kernel.dev}/lib/modules/${kernel.modDirVersion}";
+  nativeBuildInputs = [ bc ] ++ kernel.moduleBuildDependencies;
 
+  preBuild = ''
+    cd src
+  '';
+  buildFlags = [ "modules" ];
+
+  patchPhase = ''
+    substituteInPlace ./src/Makefile \
+      --replace-fail 'KSRC_BASE = /lib/modules/$(shell uname -r)' "KSRC_BASE = ${KERNELDIR}" \
+      --replace-fail 'sudo ls -l $(ko_dir)' "" \
+      --replace-fail 'depmod $(shell uname -r)' "" \
+      --replace-fail 'modprobe $(KFILE)' "" \
+      --replace-fail '@modinfo $(ko_full)' ""
+  '';
   makeFlags = [
     "ARCH=${stdenv.hostPlatform.linuxArch}"
-    "KERNELDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
-    "EXTRA_CFLAGS=-Wall -I${kernel.dev}/include"
+  ] ++ lib.optionals (stdenv.hostPlatform != stdenv.buildPlatform) [
+    "CROSS_COMPILE=${stdenv.cc.targetPrefix}"
   ];
 
-  postPatch = ''
-    substituteInPlace ./yt_nic_install.sh \
-      --replace-quiet "/lib/modules" "$out/lib/modules/${kernel.modDirVersion}" \
-      --replace-quiet "/sbin/depmod" "# depmod"
-    substituteInPlace ./src/Makefile \
-      --replace-quiet "/lib/modules" "$out/lib/modules/${kernel.modDirVersion}" \
-      --replace-quiet "KSRC_BASE = /lib/modules/$(shell uname -r)" \
-                      "KSRC_BASE = ${kernel.dev}/lib/modules/${kernel.modDirVersion}"
-  '';
-
-  preInstall = ''
-    mkdir -p "$out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/ethernet/motorcomm"
-  '';
-
-  postInstall = ''
-    nuke-refs $out/lib/modules/*/kernel/drivers/net/ethernet/motorcomm/*.ko
-  '';
-
+  INSTALL_MOD_PATH = placeholder "out";
   enableParallelBuilding = true;
 
   meta = with lib; {

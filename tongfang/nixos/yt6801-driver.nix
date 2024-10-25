@@ -12,25 +12,24 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ bc nukeReferences ] ++ kernel.moduleBuildDependencies;
+  buildInputs = [ kernel.dev ];
   hardeningDisable = [ "pic" "format" ];
-
-  postPatch = ''
-    substituteInPlace ./yt_nic_install.sh \
-      --replace "/lib/modules" "$out/lib/modules" \
-      --replace "/sbin/depmod" "# depmod"
-
-    substituteInPlace ./src/Makefile \
-      --replace "/lib/modules" "$out/lib/modules/${kernel.modDirVersion}" \
-      --replace "kernel/drivers/net/ethernet/motorcomm" "$out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/ethernet/motorcomm"
-  '';
 
   makeFlags = [
     "ARCH=${stdenv.hostPlatform.linuxArch}"
-    ("KERNELDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build")
-    ("EXTRA_CFLAGS=-Wall -g -I${kernel.dev}/include")
-  ] ++ lib.optionals (stdenv.hostPlatform != stdenv.buildPlatform) [
-    "CROSS_COMPILE=${stdenv.cc.targetPrefix}"
+    "KERNELDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+    "EXTRA_CFLAGS=-Wall -I${kernel.dev}/include"
   ];
+
+  postPatch = ''
+    substituteInPlace ./yt_nic_install.sh \
+      --replace-quiet "/lib/modules" "$out/lib/modules/${kernel.modDirVersion}" \
+      --replace-quiet "/sbin/depmod" "# depmod"
+    substituteInPlace ./src/Makefile \
+      --replace-quiet "/lib/modules" "$out/lib/modules/${kernel.modDirVersion}" \
+      --replace-quiet "KSRC_BASE = /lib/modules/$(shell uname -r)" \
+                      "KSRC_BASE = ${kernel.dev}/lib/modules/${kernel.modDirVersion}"
+  '';
 
   preInstall = ''
     mkdir -p "$out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/ethernet/motorcomm"

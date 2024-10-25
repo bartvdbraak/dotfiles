@@ -3,15 +3,24 @@
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
 
+let
+  yt6801Overlay = (final: prev: {
+    yt6801-driver = import ./yt6801-driver.nix {
+      inherit (pkgs) lib stdenv fetchurl kernel bc nukeReferences;
+    };
+  });
+in
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
+  nixpkgs.overlays = [ yt6801Overlay ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.extraModulePackages = [ pkgs.yt6801-driver ];
+  environment.systemPackages = with pkgs; [ yt6801-driver ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/c7cf28c3-5744-45cc-8a81-456d24e44b7a";

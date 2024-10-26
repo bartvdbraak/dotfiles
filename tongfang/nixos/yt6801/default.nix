@@ -6,27 +6,23 @@ stdenv.mkDerivation rec {
   name = "${pname}-${version}-${kernel.version}";
 
   src = fetchzip {
-    url = "https://www.motor-comm.com/Public/Uploads/uploadfile/files/20240812/yt6801-linux-driver-1.0.29.zip";
+    url = "https://www.motor-comm.com/Public/Uploads/uploadfile/files/20240812/yt6801-linux-driver-${version}.zip";
     sha256 = "sha256-oz6CeOUN6QWKXxe3WUZljhGDTFArsknjzBuQ4IchGeU=";
     stripRoot = false;
   };
+
+  patches = [ "./src_makefile.patch" ];
 
   hardeningDisable = [ "pic" "format" ];
   KERNELDIR = "${kernel.dev}/lib/modules/${kernel.modDirVersion}";
   nativeBuildInputs = [ bc ] ++ kernel.moduleBuildDependencies;
 
-  preBuild = ''
-    cd src
-  '';
+  preBuild = "cd src";
   buildFlags = [ "modules" ];
 
   patchPhase = ''
     substituteInPlace ./src/Makefile \
-      --replace-fail 'KSRC_BASE = /lib/modules/$(shell uname -r)' "KSRC_BASE = ${KERNELDIR}" \
-      --replace-fail 'sudo ls -l $(ko_dir)' "" \
-      --replace-fail 'depmod $(shell uname -r)' "" \
-      --replace-fail 'modprobe $(KFILE)' "" \
-      --replace-fail '@modinfo $(ko_full)' ""
+      --replace-fail 'KSRC_BASE = /lib/modules/$(shell uname -r)' "KSRC_BASE = ${KERNELDIR}"
   '';
   makeFlags = [
     "ARCH=${stdenv.hostPlatform.linuxArch}"
@@ -39,7 +35,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     description = "Motorcomm yt6801 Network Interface Card (NIC) driver";
-    homepage = "https://www.motor-comm.com/";
+    homepage = "https://www.motor-comm.com/product/ethernet-control-chip";
     license = licenses.gpl2Only;
     platforms = platforms.linux;
     maintainers = with maintainers; [ bartvdbraak ];

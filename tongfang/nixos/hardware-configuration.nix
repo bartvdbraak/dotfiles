@@ -4,7 +4,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 let
-  yt6801 = import ./yt6801-driver.nix {
+  yt6801 = import ./yt6801/default.nix {
     inherit (pkgs) lib stdenv fetchzip nukeReferences bc;
     kernel = pkgs.linuxPackages.kernel;
   };

@@ -3,6 +3,12 @@
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
 
+let
+  yt6801 = import ./yt6801/default.nix {
+    inherit (pkgs) lib stdenv fetchFromGitHub nukeReferences bc;
+    kernel = pkgs.linuxPackages.kernel;
+  };
+in
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
@@ -11,7 +17,7 @@
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.extraModulePackages = [ yt6801 ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/c7cf28c3-5744-45cc-8a81-456d24e44b7a";

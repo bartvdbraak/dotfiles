@@ -5,7 +5,7 @@
 
 let
   yt6801 = import ./yt6801/default.nix {
-    inherit (pkgs) lib stdenv fetchzip nukeReferences bc;
+    inherit (pkgs) lib stdenv fetchFromGitHub nukeReferences bc;
     kernel = pkgs.linuxPackages.kernel;
   };
 in

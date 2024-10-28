@@ -24,5 +24,6 @@ in
     '')
     dig
     caligula
+    spotify
   ];
 }

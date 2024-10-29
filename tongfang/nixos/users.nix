@@ -17,6 +17,7 @@
       opentofu
       python3
       gnumake
+      gccgo
       _1password-gui
       # nodejs_22
       # corepack_22

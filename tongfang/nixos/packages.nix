@@ -16,6 +16,7 @@ in
     curl
     fzf
     jq
+    ranger
     ripgrep
     networkmanager-openvpn
     (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''

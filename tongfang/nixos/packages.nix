@@ -16,6 +16,7 @@ in
     curl
     fzf
     jq
+    silver-searcher
     ranger
     ripgrep
     networkmanager-openvpn
@@ -26,5 +27,6 @@ in
     dig
     caligula
     spotify
+    texlive.combined.scheme-full 
   ];
 }

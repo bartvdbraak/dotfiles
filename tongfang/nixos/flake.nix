@@ -3,6 +3,7 @@
 
   inputs = {
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    zig.url = "github:mitchellh/zig-overlay";
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {

@@ -26,8 +26,9 @@ in
     '')
     dig
     caligula
-    inputs.zig.packages."${system}".default
+    zig
+    zls
     spotify
-    texlive.combined.scheme-full 
+    texlive.combined.scheme-full
   ];
 }

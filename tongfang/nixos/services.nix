@@ -23,6 +23,9 @@
 
   # Enable security-related service for realtime audio tasks
   security.rtkit.enable = true;
+  
+  # Enable to update some devices' firmware
+  services.fwupd.enable = true;
 
   # Steam, Tailscale, and other programs/services
   programs.steam.enable = true;

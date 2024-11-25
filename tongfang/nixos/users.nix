@@ -24,6 +24,8 @@
       azure-cli
       sops
       blender
+      inkscape
+      gimp
       nixfmt-rfc-style
     ];
   };

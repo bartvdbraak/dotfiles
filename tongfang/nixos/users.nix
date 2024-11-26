@@ -4,7 +4,7 @@
   users.users.bart = {
     isNormalUser = true;
     description = "Bart van der Braak";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "docker" ];
     packages = with pkgs; [
       vscodium
       thunderbird
@@ -50,6 +50,10 @@
   # GPG agent configuration
   programs.gnupg.agent.enable = true;
   programs.gnupg.dirmngr.enable = true;
+
+  # Add KVM support
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
 
   # Add Docker support
   virtualisation.docker.enable = true;

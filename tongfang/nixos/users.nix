@@ -18,7 +18,6 @@
       python3
       gnumake
       gccgo
-      _1password-gui
       # nodejs_22
       # corepack_22
       azure-cli
@@ -37,6 +36,14 @@
     # Workaround for electron dependency in Logseq
     "electron-27.3.11"
   ];
+
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    # Certain features, including CLI integration and system authentication support,
+    # require enabling PolKit integration on some desktop environments (e.g. Plasma).
+    polkitPolicyOwners = [ "bart" ];
+  };
 
   # SSH agent configuration
   programs.ssh.startAgent = true;

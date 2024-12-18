@@ -26,7 +26,9 @@ return {
   },
 
   -- Use a steady block cursor
-  default_cursor_style = "SteadyBlock",
+  default_cursor_style = "BlinkingBlock",
+  cursor_blink_rate = 600,
+  animation_fps = 144,
 
   -- Set scrollback lines to a large number for history
   scrollback_lines = 10000,

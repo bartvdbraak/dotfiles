@@ -2,12 +2,12 @@
 
 {
   # Desktop, display and greeter configuration
-  services.xserver.enable = false;
-  services.desktopManager.plasma6.enable = true;
+  services.xserver.enable = true;
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
   };
+  services.desktopManager.plasma6.enable = true;
 
   # Audio system with PipeWire
   # Enable PipeWire and ALSA support
@@ -33,11 +33,7 @@
   programs.partition-manager.enable = true;
 
   # Environment variables
-  environment.variables = {
-    EDITOR = "vim";
-    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
-    NIXOS_OZONE_WL = "1";
-  };
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Printing and Bluetooth
   # Disable browsed: https://discourse.nixos.org/t/newly-announced-vulnerabilities-in-cups

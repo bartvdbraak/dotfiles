@@ -14,6 +14,7 @@ in
     vim
     wget
     curl
+    ghostty
     fzf
     jq
     silver-searcher

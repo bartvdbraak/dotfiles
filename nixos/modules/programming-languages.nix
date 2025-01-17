@@ -9,6 +9,5 @@
     bun
     lua
     zig
-    numbat
   ];
 }

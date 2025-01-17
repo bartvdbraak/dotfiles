@@ -61,11 +61,11 @@
           ./modules/kde.nix
           # ./modules/battery.nix
           # ./modules/bluetooth.nix
-          ./modules/bootloader.nix
-          # ./modules/configuration.nix
+          # ./modules/bootloader.nix
+          ./modules/configuration.nix
           # ./modules/creative-tools.nix
           # ./modules/devops-tools.nix
-          # ./modules/display-manager.nix
+          ./modules/display-manager.nix
           # ./modules/environment-variables.nix
           # ./modules/firewall.nix
           # ./modules/fonts.nix

@@ -8,10 +8,6 @@ if [ -L /etc/nixos ] && [ -e /etc/nixos ]; then
     exit 0
 fi
 
-# Copy hardware configuration
-cp /etc/nixos/hardware-configuration.nix "$nixos_home"
-echo "Copied generated hardware configuration into $nixos_home"
-
 # Backup current /etc/nixos if it exists
 if [ -e /etc/nixos ]; then
     mv /etc/nixos /etc/nixos.bak

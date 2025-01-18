@@ -89,7 +89,7 @@
           # ./modules/theme.nix
           # ./modules/time.nix
           # ./modules/usb.nix
-          # ./modules/users.nix
+          ./modules/users.nix
           # ./modules/utils.nix
           # ./modules/virtualisation.nix
           # ./modules/vpn.nix
